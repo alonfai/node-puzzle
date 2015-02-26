@@ -30,8 +30,22 @@ exports.lookup = (ip) ->
 
   find = this.ip2long ip
 
-  for line, i in gindex
-   if find >= line[GEO_FIELD_MIN] and find <= line[GEO_FIELD_MAX]
-    return normalize line
+  #binary search inside the geo.txt array
+  while minIndex <= maxIndex
+    currentIndex = Math.round(minIndex + maxIndex) / 2
+    currentLine = gindex[currentIndex]
+    currentLineMin = currentLine[GEO_FIELD_MIN]
+    currentLinedMax = currentLine[GEO_FIELD_MAX]
+    if find >= currentLineMin and find <= currentLinedMax
+      return normalize currentLine
+
+    if find > currentLineMin
+      minIndex = currentIndex + 1
+    else
+      maxIndex = currentIndex - 1
+
+  #for line, i in gindex
+  # if find >= line[GEO_FIELD_MIN] and find <= line[GEO_FIELD_MAX]
+  #  return normalize line
 
   return null
