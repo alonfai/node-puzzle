@@ -30,6 +30,12 @@
             line = line.split('\t');
             results.push(gindex.push([+line[0], +line[1], line[3]]));
         }
+
+        // maybe--> [21, 0, 3, 11, 4, 5, 6, 7, 8, 9, 10, 1, 2, 12, 13, 14, 15, 16, 17, 18, 19, 20, 22]
+        gindex = gindex.sort(function(a,b){
+            return a[0] > b[0] ? 1 : a[0] < b[0] ? -1 : 0;
+        });
+
         return results;
     };
 
